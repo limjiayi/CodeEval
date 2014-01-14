@@ -28,17 +28,19 @@ def word_search(board, word, results=[], history=[]):
         return True
     if not results:
         results = find_loc(board, word[0])
+    found = False
     for res in results:
         letter = word[1]
         locs = search_adj(board, res, letter)
         locs = [ loc for loc in locs if loc not in history+[res] ]
         if not locs:
             continue
-        return word_search(board, word[1:], locs, history+[res])
-    return False
+        if word_search(board, word[1:], locs, history+[res]):
+            found = True
+    return found
 
 def start():
-    board = [['A','B','C','D'],
+    board = [['A','B','C','E'],
              ['S','F','C','S'],
              ['A','D','E','E']]
     filepath = sys.argv[1]
